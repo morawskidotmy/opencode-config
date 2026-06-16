@@ -18,6 +18,7 @@ These instructions are intentionally broad. More specific project instructions, 
 - For implementation, report changed files and verification.
 - Avoid speculative abstractions, dependencies, and compatibility layers.
 - Preserve project style and tooling.
+- Agents are firejailed by default; when firejailed, a `FIREJAIL.md` symlink is always present in the workspace. Read it for sandbox notes before assuming host access.
 
 ## Token Efficiency
 
