@@ -59,7 +59,6 @@ remove_path "$CONFIG_DIR/skills/coding-agent"
 remove_path "$CONFIG_DIR/agents/plan.md"
 remove_path "$CONFIG_DIR/agents/oracle.md"
 remove_path "$CONFIG_DIR/agents/librarian.md"
-remove_path "$CONFIG_DIR/agents/token-auditor.md"
 remove_path "$CONFIG_DIR/instructions/coding-agent-personality.md"
 remove_path "$BIN_DIR/opencode-token-audit"
 

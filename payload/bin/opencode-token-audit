@@ -68,4 +68,3 @@ printf '%s\n' '- Use CLI/scripts for orchestration and data reduction before mod
 printf '%s\n' '- Use MCP mainly for live read-only API/data access.'
 printf '%s\n' '- Disable MCP servers that were not needed in the last two weeks.'
 printf '%s\n' '- Keep tool outputs short; summarize, paginate, or filter before returning.'
-printf '%s\n' '- Ask token-auditor to review project-specific config before large sessions.'

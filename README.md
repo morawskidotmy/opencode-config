@@ -2,7 +2,7 @@
 
 An installable OpenCode configuration bundle focused on lower token usage, better agent ergonomics, and a pragmatic coding-agent workflow.
 
-It installs a small set of global OpenCode skills, Oracle and Librarian subagents, an Oracle-style plan mode agent, a read-only token audit agent, a local audit helper, and coding-agent base personality instructions. Optional flags can tune OpenCode config or skip the base personality.
+It installs a small set of global OpenCode skills, Oracle and Librarian subagents, an Oracle-style plan mode agent, a local audit helper, and coding-agent base personality instructions. Optional flags can tune OpenCode config or skip the base personality.
 
 The base personality, Oracle/Librarian agents, and coding-agent workflow patterns are adapted from Amp-style coding-agent work and reshaped for OpenCode's agent, skill, and config system.
 
@@ -10,7 +10,7 @@ The base personality, Oracle/Librarian agents, and coding-agent workflow pattern
 > The default install updates your OpenCode config only to add the coding-agent base instruction file. It does not tune token settings and does not disable MCP servers unless you explicitly edit config yourself.
 
 > [!NOTE]
-> This bundle installs global skills named `token-minimizer` and `coding-agent`, global agents named `oracle`, `librarian`, and `token-auditor`, and overrides the global `plan` agent. If matching files already exist under `~/.config/opencode/skills/` or `~/.config/opencode/agents/`, the installer creates dated backups before replacing them. Older installs that created `oracle` and `librarian` skills are cleaned up by `./uninstall.sh` or `./install.sh --uninstall`.
+> This bundle installs global skills named `token-minimizer` and `coding-agent`, global agents named `oracle` and `librarian`, and overrides the global `plan` agent. If matching files already exist under `~/.config/opencode/skills/` or `~/.config/opencode/agents/`, the installer creates dated backups before replacing them. Older installs that created `oracle` and `librarian` skills are cleaned up by `./uninstall.sh` or `./install.sh --uninstall`.
 
 ## What You Get
 
@@ -22,7 +22,6 @@ The base personality, Oracle/Librarian agents, and coding-agent workflow pattern
 | `librarian` agent | `~/.config/opencode/agents/librarian.md` | Subagent version of Librarian for direct OpenCode agent invocation |
 | `coding-agent` skill | `~/.config/opencode/skills/coding-agent/` | Pair-programming behavior as an on-demand skill |
 | coding-agent base instructions | `~/.config/opencode/instructions/coding-agent-personality.md` | Global pair-programming defaults applied through OpenCode `instructions` |
-| `token-auditor` agent | `~/.config/opencode/agents/token-auditor.md` | Read-only OpenCode/project token-bloat review |
 | `opencode-token-audit` | `~/.local/bin/opencode-token-audit` | CLI summary of installed skills, agents, MCP config signals, and token-saving checks |
 
 ## Quick Start
@@ -98,12 +97,6 @@ You can still combine config tuning with the default coding-agent personality:
 
 ## How To Use In OpenCode
 
-Ask for an audit:
-
-```text
-Use token-auditor to review this project for token bloat.
-```
-
 Convert repeated work into a skill:
 
 ```text
@@ -157,7 +150,6 @@ This project follows the 2026 token-efficiency consensus from recent MCP and age
 
 - Default install only copies files.
 - Existing installed files are backed up before replacement.
-- `token-auditor` denies edits and bash by default.
 - MCP servers are never disabled automatically.
 - Config changes are opt-in and backed up.
 - Uninstall removes installed bundle files but does not rewrite OpenCode config.
