@@ -12,6 +12,7 @@ trap cleanup EXIT
 mkdir -p "$TMP_DIR"
 
 bash -n "$ROOT_DIR/install.sh"
+bash -n "$ROOT_DIR/uninstall.sh"
 bash -n "$ROOT_DIR/payload/bin/opencode-token-audit"
 node --check "$ROOT_DIR/scripts/merge-opencode-config.mjs"
 
@@ -23,10 +24,12 @@ OPENCODE_CONFIG_DIR="$TMP_DIR/config" OPENCODE_TOKEN_MINIMIZER_BIN="$TMP_DIR/bin
   "$ROOT_DIR/install.sh" --tune-config >/dev/null
 
 test -f "$TMP_DIR/config/skills/token-minimizer/SKILL.md"
-test -f "$TMP_DIR/config/skills/oracle/SKILL.md"
-test -f "$TMP_DIR/config/skills/librarian/SKILL.md"
 test -f "$TMP_DIR/config/skills/coding-agent/SKILL.md"
+test ! -e "$TMP_DIR/config/skills/oracle"
+test ! -e "$TMP_DIR/config/skills/librarian"
 test -f "$TMP_DIR/config/agents/plan.md"
+test -f "$TMP_DIR/config/agents/oracle.md"
+test -f "$TMP_DIR/config/agents/librarian.md"
 test -f "$TMP_DIR/config/agents/token-auditor.md"
 test -f "$TMP_DIR/config/instructions/coding-agent-personality.md"
 test -x "$TMP_DIR/bin/opencode-token-audit"
@@ -47,8 +50,21 @@ test ! -e "$TMP_DIR/config/skills/oracle"
 test ! -e "$TMP_DIR/config/skills/librarian"
 test ! -e "$TMP_DIR/config/skills/coding-agent"
 test ! -e "$TMP_DIR/config/agents/plan.md"
+test ! -e "$TMP_DIR/config/agents/oracle.md"
+test ! -e "$TMP_DIR/config/agents/librarian.md"
 test ! -e "$TMP_DIR/config/agents/token-auditor.md"
 test ! -e "$TMP_DIR/bin/opencode-token-audit"
 node -e 'const fs=require("fs"); const cfg=JSON.parse(fs.readFileSync(process.argv[1],"utf8")); if(cfg.instructions?.includes(process.argv[2])) process.exit(1)' "$TMP_DIR/config/opencode.jsonc" "$TMP_DIR/config/instructions/coding-agent-personality.md"
+
+OPENCODE_CONFIG_DIR="$TMP_DIR/config-old-system" OPENCODE_TOKEN_MINIMIZER_BIN="$TMP_DIR/bin-old-system" \
+  "$ROOT_DIR/install.sh" >/dev/null
+mkdir -p "$TMP_DIR/config-old-system/skills/oracle" "$TMP_DIR/config-old-system/skills/librarian"
+touch "$TMP_DIR/config-old-system/skills/oracle/SKILL.md" "$TMP_DIR/config-old-system/skills/librarian/SKILL.md"
+OPENCODE_CONFIG_DIR="$TMP_DIR/config-old-system" OPENCODE_TOKEN_MINIMIZER_BIN="$TMP_DIR/bin-old-system" \
+  "$ROOT_DIR/uninstall.sh" >/dev/null
+test ! -e "$TMP_DIR/config-old-system/skills/oracle"
+test ! -e "$TMP_DIR/config-old-system/skills/librarian"
+test ! -e "$TMP_DIR/config-old-system/agents/oracle.md"
+test ! -e "$TMP_DIR/config-old-system/agents/librarian.md"
 
 printf '%s\n' "Smoke test passed"

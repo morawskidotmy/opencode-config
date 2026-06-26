@@ -14,7 +14,7 @@ UNINSTALL=0
 usage() {
   printf '%s\n' "Usage: $0 [--dry-run] [--tune-config] [--no-coding-agent-personality] [--uninstall]"
   printf '%s\n' ""
-  printf '%s\n' "Installs OpenCode token minimizer skill, Oracle plan agent, auditor agent, and audit helper."
+  printf '%s\n' "Installs OpenCode token minimizer skill, Oracle/Librarian agents, auditor agent, and audit helper."
   printf '%s\n' "--tune-config adds conservative tool_output and compaction settings."
   printf '%s\n' "--no-coding-agent-personality skips installing global coding-agent base instructions."
   printf '%s\n' "--uninstall removes files installed by this bundle."
@@ -86,6 +86,8 @@ if [ "$UNINSTALL" -eq 1 ]; then
   remove_path "$CONFIG_DIR/skills/librarian"
   remove_path "$CONFIG_DIR/skills/coding-agent"
   remove_path "$CONFIG_DIR/agents/plan.md"
+  remove_path "$CONFIG_DIR/agents/oracle.md"
+  remove_path "$CONFIG_DIR/agents/librarian.md"
   remove_path "$CONFIG_DIR/agents/token-auditor.md"
   remove_path "$CONFIG_DIR/instructions/coding-agent-personality.md"
   remove_path "$BIN_DIR/opencode-token-audit"
@@ -94,10 +96,10 @@ if [ "$UNINSTALL" -eq 1 ]; then
 fi
 
 copy_file "$ROOT_DIR/payload/skills/token-minimizer/SKILL.md" "$CONFIG_DIR/skills/token-minimizer/SKILL.md"
-copy_file "$ROOT_DIR/payload/skills/oracle/SKILL.md" "$CONFIG_DIR/skills/oracle/SKILL.md"
-copy_file "$ROOT_DIR/payload/skills/librarian/SKILL.md" "$CONFIG_DIR/skills/librarian/SKILL.md"
 copy_file "$ROOT_DIR/payload/skills/coding-agent/SKILL.md" "$CONFIG_DIR/skills/coding-agent/SKILL.md"
 copy_file "$ROOT_DIR/payload/agents/plan.md" "$CONFIG_DIR/agents/plan.md"
+copy_file "$ROOT_DIR/payload/agents/oracle.md" "$CONFIG_DIR/agents/oracle.md"
+copy_file "$ROOT_DIR/payload/agents/librarian.md" "$CONFIG_DIR/agents/librarian.md"
 copy_file "$ROOT_DIR/payload/agents/token-auditor.md" "$CONFIG_DIR/agents/token-auditor.md"
 copy_file "$ROOT_DIR/payload/bin/opencode-token-audit" "$BIN_DIR/opencode-token-audit"
 
@@ -130,10 +132,10 @@ fi
 
 log "Installed opencode-config bundle."
 log "Skill: $CONFIG_DIR/skills/token-minimizer/SKILL.md"
-log "Extra skills: oracle, librarian, coding-agent"
+log "Extra skill: coding-agent"
 log "Note: existing files with these names are backed up before replacement."
 log "Plan mode agent: $CONFIG_DIR/agents/plan.md"
-log "Agent: $CONFIG_DIR/agents/token-auditor.md"
+log "Agents: oracle, librarian, token-auditor"
 log "Audit helper: $BIN_DIR/opencode-token-audit"
 if [ "$CODING_AGENT_PERSONALITY" -eq 1 ]; then
   log "Coding-agent personality instructions: $CONFIG_DIR/instructions/coding-agent-personality.md"
