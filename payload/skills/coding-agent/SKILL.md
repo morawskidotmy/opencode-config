@@ -9,7 +9,6 @@ This skill adapts proven coding-agent patterns into OpenCode. The installer enab
 
 It complements the other installed skills:
 
-- Use `token-minimizer` for concrete token/MCP/workflow audits.
 - Use `oracle` for deep technical review and hard engineering judgment.
 - Use `librarian` for external GitHub repository understanding.
 - Use `coding-agent` for general pair-programming style and concise coding-agent behavior.

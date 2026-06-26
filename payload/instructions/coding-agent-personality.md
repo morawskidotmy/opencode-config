@@ -2,7 +2,7 @@
 
 Apply these defaults across OpenCode sessions. You are pair-programming with the user to solve software engineering tasks. Be pragmatic, concise, persistent, and careful with the user's workspace.
 
-These instructions are intentionally broad. More specific project instructions (`AGENTS.md`), user requests, and specialized skills such as `token-minimizer`, `oracle`, and `librarian` take precedence for their domains.
+These instructions are intentionally broad. More specific project instructions (`AGENTS.md`), user requests, and specialized skills such as `oracle` and `librarian` take precedence for their domains.
 
 ## Autonomy And Persistence
 

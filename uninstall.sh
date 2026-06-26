@@ -3,7 +3,6 @@ set -euo pipefail
 
 ROOT_DIR="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)"
 CONFIG_DIR="${OPENCODE_CONFIG_DIR:-$HOME/.config/opencode}"
-BIN_DIR="${OPENCODE_TOKEN_MINIMIZER_BIN:-$HOME/.local/bin}"
 CONFIG_FILE="$CONFIG_DIR/opencode.jsonc"
 DRY_RUN=0
 
@@ -52,7 +51,6 @@ elif [ -f "$CONFIG_FILE" ]; then
   log "Warning: node not found; uninstall cannot remove coding-agent-personality from $CONFIG_FILE automatically."
 fi
 
-remove_path "$CONFIG_DIR/skills/token-minimizer"
 remove_path "$CONFIG_DIR/skills/oracle"
 remove_path "$CONFIG_DIR/skills/librarian"
 remove_path "$CONFIG_DIR/skills/coding-agent"
@@ -60,6 +58,4 @@ remove_path "$CONFIG_DIR/agents/plan.md"
 remove_path "$CONFIG_DIR/agents/oracle.md"
 remove_path "$CONFIG_DIR/agents/librarian.md"
 remove_path "$CONFIG_DIR/instructions/coding-agent-personality.md"
-remove_path "$BIN_DIR/opencode-token-audit"
-
 log "Uninstall complete. Restart OpenCode if it is running."

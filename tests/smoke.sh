@@ -13,17 +13,14 @@ mkdir -p "$TMP_DIR"
 
 bash -n "$ROOT_DIR/install.sh"
 bash -n "$ROOT_DIR/uninstall.sh"
-bash -n "$ROOT_DIR/payload/bin/opencode-token-audit"
 node --check "$ROOT_DIR/scripts/merge-opencode-config.mjs"
 
 "$ROOT_DIR/install.sh" --dry-run >/dev/null
 "$ROOT_DIR/install.sh" --dry-run --tune-config >/dev/null
 "$ROOT_DIR/install.sh" --dry-run --no-coding-agent-personality >/dev/null
 
-OPENCODE_CONFIG_DIR="$TMP_DIR/config" OPENCODE_TOKEN_MINIMIZER_BIN="$TMP_DIR/bin" \
-  "$ROOT_DIR/install.sh" --tune-config >/dev/null
+OPENCODE_CONFIG_DIR="$TMP_DIR/config" "$ROOT_DIR/install.sh" --tune-config >/dev/null
 
-test -f "$TMP_DIR/config/skills/token-minimizer/SKILL.md"
 test -f "$TMP_DIR/config/skills/coding-agent/SKILL.md"
 test ! -e "$TMP_DIR/config/skills/oracle"
 test ! -e "$TMP_DIR/config/skills/librarian"
@@ -31,35 +28,25 @@ test -f "$TMP_DIR/config/agents/plan.md"
 test -f "$TMP_DIR/config/agents/oracle.md"
 test -f "$TMP_DIR/config/agents/librarian.md"
 test -f "$TMP_DIR/config/instructions/coding-agent-personality.md"
-test -x "$TMP_DIR/bin/opencode-token-audit"
-
-OPENCODE_CONFIG_DIR="$TMP_DIR/config" "$TMP_DIR/bin/opencode-token-audit" >/dev/null
-
 node -e 'const fs=require("fs"); const cfg=JSON.parse(fs.readFileSync(process.argv[1],"utf8")); if(!cfg.tool_output||!cfg.compaction||!cfg.instructions?.length) process.exit(1)' "$TMP_DIR/config/opencode.jsonc"
 
-OPENCODE_CONFIG_DIR="$TMP_DIR/config-no-personality" OPENCODE_TOKEN_MINIMIZER_BIN="$TMP_DIR/bin-no-personality" \
-  "$ROOT_DIR/install.sh" --no-coding-agent-personality >/dev/null
+OPENCODE_CONFIG_DIR="$TMP_DIR/config-no-personality" "$ROOT_DIR/install.sh" --no-coding-agent-personality >/dev/null
 node -e 'const fs=require("fs"); const p=process.argv[1]; if(fs.existsSync(p)){ const cfg=JSON.parse(fs.readFileSync(p,"utf8")); if(cfg.instructions?.length) process.exit(1) }' "$TMP_DIR/config-no-personality/opencode.jsonc"
 
-OPENCODE_CONFIG_DIR="$TMP_DIR/config" OPENCODE_TOKEN_MINIMIZER_BIN="$TMP_DIR/bin" \
-  "$ROOT_DIR/install.sh" --uninstall >/dev/null
+OPENCODE_CONFIG_DIR="$TMP_DIR/config" "$ROOT_DIR/install.sh" --uninstall >/dev/null
 
-test ! -e "$TMP_DIR/config/skills/token-minimizer"
 test ! -e "$TMP_DIR/config/skills/oracle"
 test ! -e "$TMP_DIR/config/skills/librarian"
 test ! -e "$TMP_DIR/config/skills/coding-agent"
 test ! -e "$TMP_DIR/config/agents/plan.md"
 test ! -e "$TMP_DIR/config/agents/oracle.md"
 test ! -e "$TMP_DIR/config/agents/librarian.md"
-test ! -e "$TMP_DIR/bin/opencode-token-audit"
 node -e 'const fs=require("fs"); const cfg=JSON.parse(fs.readFileSync(process.argv[1],"utf8")); if(cfg.instructions?.includes(process.argv[2])) process.exit(1)' "$TMP_DIR/config/opencode.jsonc" "$TMP_DIR/config/instructions/coding-agent-personality.md"
 
-OPENCODE_CONFIG_DIR="$TMP_DIR/config-old-system" OPENCODE_TOKEN_MINIMIZER_BIN="$TMP_DIR/bin-old-system" \
-  "$ROOT_DIR/install.sh" >/dev/null
+OPENCODE_CONFIG_DIR="$TMP_DIR/config-old-system" "$ROOT_DIR/install.sh" >/dev/null
 mkdir -p "$TMP_DIR/config-old-system/skills/oracle" "$TMP_DIR/config-old-system/skills/librarian"
 touch "$TMP_DIR/config-old-system/skills/oracle/SKILL.md" "$TMP_DIR/config-old-system/skills/librarian/SKILL.md"
-OPENCODE_CONFIG_DIR="$TMP_DIR/config-old-system" OPENCODE_TOKEN_MINIMIZER_BIN="$TMP_DIR/bin-old-system" \
-  "$ROOT_DIR/uninstall.sh" >/dev/null
+OPENCODE_CONFIG_DIR="$TMP_DIR/config-old-system" "$ROOT_DIR/uninstall.sh" >/dev/null
 test ! -e "$TMP_DIR/config-old-system/skills/oracle"
 test ! -e "$TMP_DIR/config-old-system/skills/librarian"
 test ! -e "$TMP_DIR/config-old-system/agents/oracle.md"
